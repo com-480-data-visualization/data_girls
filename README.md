@@ -19,9 +19,18 @@ Please, fill the following sections about your project.
 
 ### Dataset
 
-> Find a dataset (or multiple) that you will explore. Assess the quality of the data it contains and how much preprocessing / data-cleaning it will require before tackling visualization. We recommend using a standard dataset as this course is not about scraping nor data processing.
->
-> Hint: some good pointers for finding quality publicly available datasets ([Google dataset search](https://datasetsearch.research.google.com/), [Kaggle](https://www.kaggle.com/datasets), [OpenSwissData](https://opendata.swiss/en/), [SNAP](https://snap.stanford.edu/data/) and [FiveThirtyEight](https://data.fivethirtyeight.com/)), you could use also the DataSets proposed by the ENAC (see the Announcements section on Zulip).
+For this project, we selected two datasets:
+
+1. **[Data Science Job Data Set](https://www.kaggle.com/datasets/sachinkumar62/datascience-job-data)**  
+   This dataset includes information on job candidates applying for data science roles, covering demographic details, education background, work experience, and training hours.  
+   - **Target variable**: Whether a candidate is actively looking for a new job (1) or not (0)  
+   - **Size**: 19,158 samples  
+   - **Notes**: Contains outliers, missing values, and potentially irrelevant columns requiring data cleaning
+
+2. **[Cleaned – Jobs and Salaries in Data Science](https://www.kaggle.com/datasets/malingarajapaksha/cleaned)**  
+   This dataset contains 5,341 entries and focuses on salaries within the data science field, which is missing in the first dataset.  
+   - **Size**: 5,341 samples  
+   - **Notes**: Already cleaned and structured, suitable for analyzing salary trends and job fields in data science
 
 ### Problematic
 
