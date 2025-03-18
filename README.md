@@ -38,6 +38,30 @@ For this project, we selected two datasets:
 > - What am I trying to show with my visualization?
 > - Think of an overview for the project, your motivation, and the target audience.
 
+This project focuses on understanding the factors that drive job transitions in the data science field.
+The visualization will explore how education, experience, company characteristics, and demographics
+influence an individual’s decision to seek a new job. By identifying trends in job-seeking behavior, we
+can provide valuable insights into career mobility in the data science industry.
+
+### Key Questions from Dataset 1 (Job Seeking Behavior)
+
+- **Education & Training**: Do higher degrees or more training hours lead to more job changes?
+- **Work Experience**: Are experienced professionals more likely to stay or seek new roles?
+- **Company Characteristics**: Does company size or type impact retention?
+- **Demographic Insights**: Are there gender or location-based differences in job-seeking behavior?
+- **City Development Index**: Do professionals in developed cities have better job stability?
+
+  
+The second dataset can address several key problems related to salary analysis and job market trends
+in the data science field. Here are some potential problems that can be explored:
+
+### Key Questions from Dataset 2 (Salary & Market Trends)
+
+- **Salary Disparities Across Job Titles and Categories**: How do salaries differ across various job categories (e.g., Data Analysis vs. Machine Learning)? This analysis can help identify high-demand, high-paying fields.
+- **Impact of Experience on Salaries**: How does professional experience (Entry-level, Mid-level, Senior, Executive) correlate with salary growth?
+- **Geographical Salary Differences**: How do geographical factors, such as employee residence and company location, impact salary disparities?
+- **Variation of Salaries from 2020–2023**: How have salaries changed from 2020 to 2023? What trends can we observe in salary growth or decline, and how might the COVID-19 crisis have impacted these changes?
+
 ### Exploratory Data Analysis
 
 > Pre-processing of the data set you chose
@@ -47,8 +71,40 @@ For this project, we selected two datasets:
 
 
 > - What others have already done with the data?
+The Data Science Job Dataset has been explored in various ways, mainly through machine learning
+models for job-seeking prediction and EDA (Exploratory Data Analysis) on candidate demographics
+and company types. Many Kaggle notebooks and blog posts have focused on predicting whether a
+candidate is likely to look for a new job using classification models like logistic regression, random
+forests, and deep learning.
+
+For the ”Cleaned - Jobs and Salaries in Data Science”, a previous analysis explores trends in data
+science job postings over time. It visualizes how the number of jobs has changed monthly, highlights
+the most common job titles and how their popularity has shifted, and examines trends in work modes
+(remote, onsite, hybrid).
+
 > - Why is your approach original?
+
+Unlike prior works that primarily focus on machine learning predictions, our approach prioritizes inter-
+active visual storytelling, making the insights more accessible to students, recent graduates, recruiters,
+and industry professionals. Instead of simply building a model to predict job-seeking behavior, we
+will visualize career mobility trends, relationships between skills and employability, and the impact
+of company characteristics on retention. Our approach is also highly relevant to us as data science
+students, providing guidance for those entering the workforce.
+
+Our analysis of the second dataset offers a more original perspective by not only tracking how data
+science roles have evolved over time but also exploring external factors driving these trends. Unlike
+the referenced analysis which focuses primarily on descriptive trends, our approach aim to examine the
+impact of events such as the COVID-19 pandemic, the rise of remote work. Furthermore, our approach
+aims to focus on salary disparities over time across job roles, locations, and experience levels.
+
 > - What source of inspiration do you take? Visualizations that you found on other websites or magazines (might be unrelated to your data).
+
+Our inspiration comes from multiple sources, particularly our own experiences as data science students
+entering the job market. Like many students and recent graduates, we actively follow job market trends
+and salaries through platforms such as LinkedIn, Glassdoor job reports. These platforms have helped
+us understand how data professionals navigate their careers, and they inspired us to explore what
+factors influence job mobility in data science with this dataset.
+
 > - In case you are using a dataset that you have already explored in another context (ML or ADA course, semester project...), you are required to share the report of that work to outline the differences with the submission for this class.
 
 ## Milestone 2 (18th April, 5pm)
