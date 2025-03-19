@@ -94,8 +94,8 @@ Illustrates the academic qualifications of professionals in the dataset.
 
 #### Further Analysis
 More visualizations and insights are available in the accompanying notebooks:
-- [data_inspection_d2.ipynb](data_inspection_d2.ipynb)
-- [data_science_analysis_d1.ipynb](data_science_analysis_d1.ipynb)
+- [data_inspection_d2.ipynb](Milestone1/data_inspection_d2.ipynb)
+- [data_science_analysis_d1.ipynb](Milestone1/data_science_analysis_d1.ipynb)
 
 
 ### Related work
