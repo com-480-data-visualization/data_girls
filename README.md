@@ -2,9 +2,9 @@
 
 | Student's name | SCIPER |
 | -------------- | ------ |
-| | |
-| | |
-| | |
+|Zaineb Tafasca | 326940|
+|Imane Zaaraoui |314994 |
+|Tamara Antoun |324875 |
 
 [Milestone 1](#milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
 
@@ -66,6 +66,37 @@ in the data science field. Here are some potential problems that can be explored
 
 > Pre-processing of the data set you chose
 > - Show some basic statistics and get insights about the data
+
+We conducted a preliminary analysis to uncover patterns in roles, company sizes, salaries, and educational backgrounds. The goal is to understand the structure of the data and extract useful insights for further modeling or reporting.
+
+### Key Visualizations
+
+#### 1. Company Size Category Distribution
+Shows how data science roles are spread across small (S), medium (M), and large (L) companies.
+
+![Company Size Category](plots/company_size_category.png)
+
+---
+
+#### 2. Salary Distribution (Boxplot)
+Visualizes salary spread and outliers.
+
+![Salary Boxplot](plots/salary_boxplot.png)
+
+---
+
+#### 3. Major Discipline Breakdown
+Highlights the most common academic disciplines (e.g., STEM, Business) among professionals.
+
+![Major Discipline](plots/major_discipline.png)
+
+---
+
+#### Further Analysis
+More visualizations and insights are available in the accompanying notebooks:
+- [data_inspection_d2.ipynb](data_inspection_d2.ipynb)
+- [data_science_analysis_d1.ipynb](data_science_analysis_d1.ipynb)
+
 
 ### Related work
 
