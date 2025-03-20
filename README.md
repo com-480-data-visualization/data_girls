@@ -85,17 +85,17 @@ Visualizes salary spread and outliers.
 
 ---
 
-#### 3. Major Discipline Breakdown
-Highlights the most common academic disciplines (e.g., STEM, Business) among professionals.
+#### 3. Education Level Distribution
+Illustrates the academic qualifications of professionals in the dataset.
 
-![Major Discipline](plots/major_discipline.png)
+![Education Level](plots/education_level.png)
 
 ---
 
 #### Further Analysis
 More visualizations and insights are available in the accompanying notebooks:
-- [data_inspection_d2.ipynb](data_inspection_d2.ipynb)
-- [data_science_analysis_d1.ipynb](data_science_analysis_d1.ipynb)
+- [data_inspection_d2.ipynb](Milestone1/data_inspection_d2.ipynb)
+- [data_science_analysis_d1.ipynb](Milestone1/data_science_analysis_d1.ipynb)
 
 
 ### Related work
