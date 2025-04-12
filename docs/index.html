@@ -1,37 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Data Science Career Visualizations</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Girls Project</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fefefe;
+      color: #333;
+    }
+
+    .navbar {
+      background-color: rgba(255, 182, 193, 0.9); /* light pink */
+      padding: 1rem 0;
+      display: flex;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #fff;
+      background-color: #f7a8b8;
+      padding: 0.8rem 1.5rem;
+      margin: 0 1rem;
+      border-radius: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .navbar a:hover {
+      background-color: #ffccd5;
+    }
+
+    .container {
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 2rem;
+      max-width: 900px;
+      margin: 3rem auto;
+      border-radius: 20px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .container h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #d94f70;
+    }
+
+    .description-box {
+      font-size: 1.1rem;
+      text-align: justify;
+      background-color: #fff0f4;
+      border-left: 6px solid #f7a8b8;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .image-container {
+      display: flex;
+      justify-content: center;
+      margin: 2rem auto;
+      max-width: 100%;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: auto;
+      border-radius: 0;
+      box-shadow: none;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>Data Science Career Visualization</h1>
-    <p>Milestone 2 – COM-480 Data Visualization Project</p>
-  </header>
+  <div class="navbar">
+    <a href="index.html">Home Page</a>
+    <a href="salary.html">Salary Page</a>
+  </div>
 
-  <main>
-    <section>
-      <h2>1. Bubble Chart – Job Titles Overview</h2>
-      <img src="images/bubble_chart.png" alt="Bubble Chart Sketch">
-    </section>
+  <div class="container">
+    <h1>Welcome to Data Girls Homepage</h1>
+    <div class="description-box">
+      This project explores the factors that influence job transitions and salary trends in the data science field. Through interactive visualizations, we analyze how education, experience, company characteristics and demographics impact both career mobility and compensation.
+      <br><br>
+      Using data from 2020 to 2023, we highlight patterns across roles such as Data Scientist, Machine Learning Engineer... revealing how these evolve over time, differ by country and vary with experience level.
+    </div>
+  </div>
 
-    <section>
-      <h2>2. Salary Distribution (Histogram)</h2>
-      <img src="images/histogram.png" alt="Salary Histogram Sketch">
-    </section>
-
-    <section>
-      <h2>3. Evolution of Average Salary (2020–2023)</h2>
-      <img src="images/line_chart.png" alt="Line Chart Sketch">
-    </section>
-    
-  </main>
-
-  <footer>
-    <p>Project by Zaineb Tafasca, Imane Zaaraoui, and Tamara Antoun – EPFL</p>
-  </footer>
+  <div class="image-container">
+    <img src="data_image_2.webp" alt="Data Science Visual Jobs">
+  </div>
 </body>
 </html>
