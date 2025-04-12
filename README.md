@@ -141,6 +141,7 @@ factors influence job mobility in data science with this dataset.
 ## Milestone 2 (18th April, 5pm)
 
 **10% of the final grade**
+website :  https://com-480-data-visualization.github.io/data_girls/
 
 
 ## Milestone 3 (30th May, 5pm)
