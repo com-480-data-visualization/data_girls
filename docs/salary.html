@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salary Page – Data Girls</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fefefe;
+      color: #333;
+    }
+
+    .navbar {
+      background-color: rgba(255, 182, 193, 0.9);
+      padding: 1rem 0;
+      display: flex;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #fff;
+      background-color: #f7a8b8;
+      padding: 0.8rem 1.5rem;
+      margin: 0 1rem;
+      border-radius: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .navbar a:hover {
+      background-color: #ffccd5;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 2rem;
+      background-color: #fff0f4;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    .container img {
+      max-width: 100%;
+      height: auto;
+      margin: 1.5rem 0;
+      cursor: pointer;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    #details {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="index.html">Home Page</a>
+    <a href="salary.html">Salary Page</a>
+  </div>
+
+  <div class="container">
+    <h2>Bubble Chart – Job Titles Overview</h2>
+    <p>Click the chart to view detailed insights below</p>
+    <img id="bubbleChart" src="images/bubble_chart.png" alt="Bubble Chart">
+
+    <div id="details">
+      <h3>Salary Distribution (Histogram) - Data_Science_job_1</h3>
+      <img src="images/histogram.png" alt="Histogram">
+
+      <h3>Evolution of Average Salary (2020–2023) - Data_Science_job_1</h3>
+      <img src="images/line_chart.png" alt="Line Chart">
+
+	  <h3>Salary vs Experience Level - Data_Science_job_1</h3>
+      <img src="images/exp_level.png" alt="exp_level">
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('bubbleChart').addEventListener('click', function () {
+      document.getElementById('details').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
