@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Job Seeking Analytics</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.2.0/dist/chartjs-chart-matrix.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff;
+      color: #333;
+      text-align: center;
+    }
+
+    .navbar {
+      background-color: rgba(255, 182, 193, 0.9);
+      padding: 1rem 0;
+      display: flex;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: #fff;
+      background-color: #f7a8b8;
+      padding: 0.8rem 1.5rem;
+      margin: 0 1rem;
+      border-radius: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .navbar a:hover {
+      background-color: #ffccd5;
+    }
+
+    .chart-container {
+      width: 90%;
+      max-width: 800px;
+      margin: 50px auto;
+    }
+
+    canvas {
+      height: 400px !important;
+    }
+
+    img.heatmap {
+      width: 100%;
+      max-width: 800px;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .center-chart {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .center-chart canvas {
+      max-width: 400px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="index.html">Home Page</a>
+    <a href="jobseeking.html">Job Seeking</a>
+    <a href="salary.html">Salary Page</a>
+  </div>
+
+  <h2>Job Seeking by Experience Level</h2>
+  <div class="chart-container">
+    <canvas id="experienceChart"></canvas>
+  </div>
+
+  <h2>Job Seeking by Company Type</h2>
+  <div class="chart-container center-chart">
+    <canvas id="companyTypeChart"></canvas>
+  </div>
+
+  <h2>Average Job Seeking Probability by Training Hours Group</h2>
+  <div class="chart-container">
+    <canvas id="trainingHoursChart"></canvas>
+  </div>
+
+  <div class="chart-container">
+    <h3>Correlation Heatmap with 'target' variable</h3>
+    <img src="images/heatmap.jpg" alt="Correlation Heatmap" class="heatmap" />
+  </div>
+
+  <!-- ✅ Prediction Section Image -->
+  <div class="chart-container">
+    <h3>Predict if Looking for a Job</h3>
+    <img src="images/predict_section.jpg" alt="Job Seeking Prediction" class="heatmap" />
+  </div>
+
+  <script>
+    new Chart(document.getElementById('experienceChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Entry', 'Mid', 'Senior', 'Expert'],
+        datasets: [
+          { label: 'Seekers', data: [55, 40, 35, 20], backgroundColor: '#FFA500' },
+          { label: 'Non-Seekers', data: [45, 60, 55, 70], backgroundColor: '#FF4500' }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: { y: { beginAtZero: true } }
+      }
+    });
+
+    new Chart(document.getElementById('companyTypeChart'), {
+      type: 'pie',
+      data: {
+        labels: ['Public Sector', 'Funded Startup', 'Pvt Ltd'],
+        datasets: [{
+          data: [25, 41.7, 33.3],
+          backgroundColor: ['#FF6384', '#FF8C00', '#FFD700']
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          datalabels: {
+            formatter: (value, ctx) => `${ctx.chart.data.labels[ctx.dataIndex]}\n${value}%`,
+            color: '#fff',
+            font: { weight: 'bold', size: 14 }
+          }
+        }
+      },
+      plugins: [ChartDataLabels]
+    });
+
+    new Chart(document.getElementById('trainingHoursChart'), {
+      type: 'line',
+      data: {
+        labels: ['0-20', '21-40', '41-60', '61-80', '81-100', '101-120', '121-140', '141-160'],
+        datasets: [{
+          label: 'Avg Seeking Probability',
+          data: [0.38, 0.52, 0.42, 0.41, 0.52, 0.40, 0.55, 0.39],
+          borderColor: 'red',
+          fill: true,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          pointBackgroundColor: 'orange',
+          pointBorderColor: 'orange',
+          pointRadius: 5,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 1,
+            title: { display: true, text: 'Average Probability of Seeking Job' }
+          },
+          x: {
+            title: { display: true, text: 'Training Hours Group' }
+          }
+        }
+      }
+    });
+  </script>
+</body>
+</html>

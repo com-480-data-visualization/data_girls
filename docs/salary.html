@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Salary Page – Data Girls</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.2.0/dist/chartjs-chart-matrix.min.js"></script>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fefefe;
+      background-color: #fff;
       color: #333;
+      text-align: center;
     }
 
     .navbar {
@@ -39,17 +43,7 @@
       background-color: #ffccd5;
     }
 
-    .container {
-      max-width: 900px;
-      margin: 3rem auto;
-      padding: 2rem;
-      background-color: #fff0f4;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      text-align: center;
-    }
-
-    .container img {
+    img {
       max-width: 100%;
       height: auto;
       margin: 1.5rem 0;
@@ -64,26 +58,26 @@
   </style>
 </head>
 <body>
+
   <div class="navbar">
     <a href="index.html">Home Page</a>
+    <a href="jobseeking.html">Job Seeking</a>
     <a href="salary.html">Salary Page</a>
   </div>
 
-  <div class="container">
-    <h2>Bubble Chart – Job Titles Overview</h2>
-    <p>Click the chart to view detailed insights below</p>
-    <img id="bubbleChart" src="images/bubble_chart.png" alt="Bubble Chart">
+  <h2>Bubble Chart – Job Titles Overview</h2>
+  <p>Click the chart to view detailed insights below</p>
+  <img id="bubbleChart" src="images/bubble_chart.png" alt="Bubble Chart">
 
-    <div id="details">
-      <h3>Salary Distribution (Histogram) - Data_Science_job_1</h3>
-      <img src="images/histogram.png" alt="Histogram">
+  <div id="details">
+    <h3>Salary Distribution (Histogram) - Data_Science_job_1</h3>
+    <img src="images/histogram.png" alt="Histogram">
 
-      <h3>Evolution of Average Salary (2020–2023) - Data_Science_job_1</h3>
-      <img src="images/line_chart.png" alt="Line Chart">
+    <h3>Evolution of Average Salary (2020–2023) - Data_Science_job_1</h3>
+    <img src="images/line_chart.png" alt="Line Chart">
 
-	  <h3>Salary vs Experience Level - Data_Science_job_1</h3>
-      <img src="images/exp_level.png" alt="exp_level">
-    </div>
+    <h3>Salary vs Experience Level - Data_Science_job_1</h3>
+    <img src="images/exp_level.png" alt="Experience Level">
   </div>
 
   <script>
