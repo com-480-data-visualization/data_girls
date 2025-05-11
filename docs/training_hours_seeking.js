@@ -6,8 +6,14 @@ d3.csv("data_science_job_cleaned.csv").then(data => {
         return;
     }
 
-    data.forEach(d => { d.target = +d.target; });
+    // Clean and preprocess the data
+    data = data.filter(d => d.training_hours_range && d.training_hours_range.trim() !== "");
+    data.forEach(d => {
+        d.target = +d.target;
+        d.training_hours_range = d.training_hours_range.trim();
+    });
 
+    // Group the data
     const groupedData = d3.rollup(
         data,
         v => v.length,
@@ -15,6 +21,7 @@ d3.csv("data_science_job_cleaned.csv").then(data => {
         d => d.target === 1 ? "Seekers" : "Non-Seekers"
     );
 
+    // Format data for visualization
     const formattedData = Array.from(groupedData, ([range, values]) => ({
         range: range,
         seekers: values.get("Seekers") || 0,
@@ -47,17 +54,24 @@ d3.csv("data_science_job_cleaned.csv").then(data => {
         .nice()
         .range([height, 0]);
 
-    const color = d3.scaleOrdinal().domain(["seekers", "nonSeekers"]).range(["#ffa500", "#ff4500"]);
+    const color = d3.scaleOrdinal()
+        .domain(["seekers", "nonSeekers"])
+        .range(["#ffa500", "#ff4500"]);
 
-    svg.append("g").attr("transform", `translate(0,${height})`).call(d3.axisBottom(x0));
-    svg.append("g").call(d3.axisLeft(y));
+    svg.append("g")
+        .attr("transform", `translate(0,${height})`)
+        .call(d3.axisBottom(x0));
 
+    svg.append("g")
+        .call(d3.axisLeft(y));
+
+    // Add bars
     svg.selectAll("g.bar-group")
         .data(formattedData)
         .enter()
         .append("g")
         .attr("class", "bar-group")
-        .attr("transform", d => `translate(${x0(d.range)},0)`) 
+        .attr("transform", d => `translate(${x0(d.range)},0)`)
         .selectAll("rect")
         .data(d => [
             { key: "seekers", value: d.seekers },
@@ -71,13 +85,7 @@ d3.csv("data_science_job_cleaned.csv").then(data => {
         .attr("height", d => height - y(d.value))
         .attr("fill", d => color(d.key));
 
-    svg.append("text")
-        .attr("x", width / 2)
-        .attr("y", -10)
-        .attr("text-anchor", "middle")
-        .style("font-size", "16px")
-        .text("Interactive Job Seeking by Training Hours");
-
 }).catch(error => {
+    console.error("Data load error:", error);
     d3.select("#chart").append("p").text("Error loading data.").style("color", "red");
 });
