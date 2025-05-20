@@ -85,6 +85,14 @@ d3.csv("data_science_job_cleaned.csv").then(data => {
         .attr("height", d => height - y(d.value))
         .attr("fill", d => color(d.key));
 
+    // Add chart title
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", -10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text("Interactive Job Seeking by Training Hours");
+
 }).catch(error => {
     console.error("Data load error:", error);
     d3.select("#chart").append("p").text("Error loading data.").style("color", "red");
