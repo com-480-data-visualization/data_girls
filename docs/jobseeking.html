@@ -1,172 +1,481 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Job Seeking Analytics</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.2.0/dist/chartjs-chart-matrix.min.js"></script>
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fff;
-      color: #333;
-      text-align: center;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Seeking Analytics</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.2.0/dist/chartjs-chart-matrix.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fff;
+        color: #333;
+        text-align: center;
+      }
 
-    .navbar {
-      background-color: rgba(255, 182, 193, 0.9);
-      padding: 1rem 0;
-      display: flex;
-      justify-content: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+      .navbar {
+        background-color: rgba(255, 182, 193, 0.9);
+        padding: 1rem 0;
+        display: flex;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
 
-    .navbar a {
-      text-decoration: none;
-      color: #fff;
-      background-color: #f7a8b8;
-      padding: 0.8rem 1.5rem;
-      margin: 0 1rem;
-      border-radius: 20px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
+      .navbar a {
+        text-decoration: none;
+        color: #fff;
+        background-color: #f7a8b8;
+        padding: 0.8rem 1.5rem;
+        margin: 0 1rem;
+        border-radius: 20px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        transition: background 0.3s ease;
+      }
 
-    .navbar a:hover {
-      background-color: #ffccd5;
-    }
+      .navbar a:hover {
+        background-color: #ffccd5;
+      }
 
-    .chart-container {
-      width: 90%;
-      max-width: 800px;
-      margin: 50px auto;
-    }
+      .chart-container {
+        width: 90%;
+        max-width: 800px;
+        margin: 50px auto;
+      }
 
-    canvas {
-      max-height: 600px !important;
-      max-width: 600px !important;
-    }
+      canvas {
+        max-height: 600px !important;
+        max-width: 600px !important;
+      }
 
-    .center-chart {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+      .center-chart {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-    img.heatmap {
-      width: 100%;
-      max-width: 800px;
-      margin-top: 20px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
+      img.heatmap {
+        width: 100%;
+        max-width: 800px;
+        margin-top: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
 
-    
-  </style>
-</head>
-<body>
+      .predictor-box {
+        background-color: #fff0f4;
+        border-left: 6px solid #f7a8b8;
+        border-radius: 12px;
+        padding: 2rem;
+        margin-top: 2rem;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        font-family: "Segoe UI", sans-serif;
+      }
 
-  <div class="navbar">
-    <a href="index.html">Home</a>
-    <a href="jobseeking.html">Job Seeking</a>
-    <a href="salary.html">Salary</a>
-  </div>
+      .predictor-box h3 {
+        margin-bottom: 1rem;
+        color: #d94f70;
+      }
 
-  <h2>Job Seeking by Experience Level</h2>
-  <div class="chart-container center-chart">
-    <canvas id="experienceChart"></canvas>
-  </div>
+      .predictor-box label {
+        display: block;
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+      }
 
-  <h2>Job Seeking by Company Type</h2>
-  <div class="chart-container center-chart">
-    <div style="width: 90%; max-width: 600px; height: 600px; position: relative;">
-      <canvas id="companyTypeChart"></canvas>
-    </div>
-  </div>
+      .predictor-box input,
+      .predictor-box select {
+        width: 100%;
+        padding: 0.6rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+      }
 
-  <h2>Average Job Seeking Probability by Training Hours Group</h2>
-  <div class="chart-container center-chart">
-    <canvas id="trainingHoursChart"></canvas>
-  </div>
+      .predictor-box button {
+        margin-top: 1.5rem;
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
+        color: white;
+        background-color: #f77ca6;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+      }
 
-  <h2>Correlation Heatmap with Key Features</h2>
-  <div class="chart-container center-chart">
-    <div id="correlationHeatmap"></div>
-  </div>
+      .predictor-box button:hover {
+        background-color: #ff99b8;
+      }
 
-  <h3>Predict if Looking for a Job</h3>
-  <div class="chart-container">
-    <img src="images/predict_section.jpg" alt="Job Seeking Prediction" class="heatmap" />
-  </div>
+      .prediction-result {
+        margin-top: 1.5rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+      }
+      .prediction-result {
+        margin-top: 1.5rem;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 0.6s ease, transform 0.4s ease;
+      }
 
-  <!-- Experience Chart Script -->
-  <script>
-    d3.csv("data_science_job_cleaned.csv").then(data => {
-      data = data.filter(d => d.training_hours_range && d.training_hours_range.trim() !== "");
-      data.forEach(d => {
-        d.target = +d.target;
-        d.training_hours_range = d.training_hours_range.trim();
-      });
+      .prediction-result.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .spinner {
+        border: 3px solid #fff;
+        border-top: 3px solid #f77ca6;
+        border-radius: 50%;
+        width: 16px;
+        height: 16px;
+        animation: spin 0.7s linear infinite;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 8px;
+      }
 
-      const grouped = d3.rollup(
-        data,
-        v => v.length,
-        d => d.training_hours_range,
-        d => d.target === 1 ? "Seekers" : "Non-Seekers"
-      );
-
-      const allRanges = Array.from(grouped.keys()).sort();
-
-      const seekersData = allRanges.map(r => grouped.get(r)?.get("Seekers") || 0);
-      const nonSeekersData = allRanges.map(r => grouped.get(r)?.get("Non-Seekers") || 0);
-
-      new Chart(document.getElementById('experienceChart'), {
-        type: 'bar',
-        data: {
-          labels: allRanges,
-          datasets: [
-            { label: 'Seekers', data: seekersData, backgroundColor: '#FFA500' },
-            { label: 'Non-Seekers', data: nonSeekersData, backgroundColor: '#FF4500' }
-          ]
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            title: {
-              display: true,
-              text: 'Job Seeking by Training Hours Range'
-            }
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              title: { display: true, text: 'Count' }
-            },
-            x: {
-              title: { display: true, text: 'Training Hours Group' }
-            }
-          }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
         }
-      });
-    }).catch(error => {
-      console.error("Error loading experience chart data:", error);
-      document.getElementById('experienceChart').outerHTML = "<p style='color:red;'>Error loading experience chart data.</p>";
-    });
-  </script>
+        100% {
+          transform: rotate(360deg);
+        }
+      }
 
-  <!-- External Scripts -->
-  <script src="company_type_seeking.js"></script>
-  <script src="avg_job_seeking.js"></script>
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="correlation_heatmap.js"></script>
+      .typing-dots {
+        display: inline-block;
+        font-weight: bold;
+        animation: blink 1.2s infinite steps(3, start);
+      }
 
-</body>
+      @keyframes blink {
+        0% {
+          content: "";
+        }
+        33% {
+          content: ".";
+        }
+        66% {
+          content: "..";
+        }
+        100% {
+          content: "...";
+        }
+      }
+      .prediction-result.success {
+        background-color: #d4f7d4;
+        padding: 1rem;
+        border-radius: 10px;
+        animation: pulseGreen 0.8s ease;
+      }
+
+      .prediction-result.fail {
+        background-color: #ffe3ec;
+        padding: 1rem;
+        border-radius: 10px;
+        animation: pulseRed 0.8s ease;
+      }
+
+      @keyframes pulseGreen {
+        0% {
+          background-color: #fff;
+        }
+        50% {
+          background-color: #d4f7d4;
+        }
+        100% {
+          background-color: #fff;
+        }
+      }
+
+      @keyframes pulseRed {
+        0% {
+          background-color: #fff;
+        }
+        50% {
+          background-color: #ffe3ec;
+        }
+        100% {
+          background-color: #fff;
+        }
+      }
+      input[type="range"] {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 10px;
+        border-radius: 5px;
+        background: #fae5eb;
+        outline: none;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 22px;
+        height: 22px;
+        background: #f77ca6;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid white;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+        transition: all 0.2s ease;
+      }
+
+      input[type="range"]::-webkit-slider-thumb:hover {
+        background: #ff99b8;
+        box-shadow: 0 0 8px 3px rgba(255, 182, 193, 0.8);
+        transform: scale(1.1);
+      }
+
+      input[type="range"]::-moz-range-thumb {
+        width: 22px;
+        height: 22px;
+        background: #f77ca6;
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <body>
+    <div class="navbar">
+      <a href="index.html">Home</a>
+      <a href="jobseeking.html">Job Seeking</a>
+      <a href="salary.html">Salary</a>
+    </div>
+
+    <h2>Job Seeking by Experience Level</h2>
+    <div class="chart-container center-chart">
+      <canvas id="experienceChart"></canvas>
+    </div>
+
+    <h2>Job Seeking by Company Type</h2>
+    <div class="chart-container center-chart">
+      <div
+        style="width: 90%; max-width: 600px; height: 600px; position: relative"
+      >
+        <canvas id="companyTypeChart"></canvas>
+      </div>
+    </div>
+
+    <h2>Average Job Seeking Probability by Training Hours Group</h2>
+    <div class="chart-container center-chart">
+      <canvas id="trainingHoursChart"></canvas>
+    </div>
+
+    <h2>Correlation Heatmap with Key Features</h2>
+    <div class="chart-container center-chart">
+      <div id="correlationHeatmap"></div>
+    </div>
+    <!-- 
+    <h3>Predict if Looking for a Job</h3>
+    <div class="chart-container">
+      <img
+        src="images/predict_section.jpg"
+        alt="Job Seeking Prediction"
+        class="heatmap"
+      />
+    </div>
+ -->
+    <!-- TRY PREDICTION -->
+
+    <div class="predictor-box">
+      <h3>🎀 Try the Job Predictor 🎀</h3>
+      <form id="predictForm">
+        <label for="gender">Gender:</label>
+        <select id="gender">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+
+        <label for="hours">Training Hours:</label>
+        <input
+          type="range"
+          id="hours"
+          min="0"
+          max="300"
+          step="1"
+          value="150"
+          oninput="document.getElementById('hourValue').value = this.value"
+        />
+        <output id="hourValue">150</output> hours
+
+        <label for="size">Company Size:</label>
+        <select id="size">
+          <option value="S">Small (S)</option>
+          <option value="M">Medium (M)</option>
+          <option value="L">Large (L)</option>
+        </select>
+
+        <button type="submit" id="predictButton">
+          <span class="spinner" id="spinner" style="display: none"></span>
+          <span id="btnText">🔍 Predict</span>
+        </button>
+      </form>
+
+      <div id="result" class="prediction-result"></div>
+    </div>
+
+    <!-- END PREDITCITON  -->
+    <!-- JS PREDITCITON  -->
+    <script>
+      document
+        .getElementById("predictForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const data = {
+            gender: document.getElementById("gender").value,
+            training_hours: parseFloat(document.getElementById("hours").value),
+            company_size: document.getElementById("size").value,
+          };
+
+          const resultBox = document.getElementById("result");
+          const btnText = document.getElementById("btnText");
+          const spinner = document.getElementById("spinner");
+
+          // Show loading state
+          btnText.innerText = "Predicting";
+          spinner.style.display = "inline-block";
+          resultBox.innerHTML = `<span class="typing-dots">...</span>`;
+          resultBox.classList.remove("show");
+
+          fetch("https://job-predictor-api.onrender.com/predict", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((res) => res.json())
+            .then((res) => {
+              if (res.seeking) {
+                confetti({ particleCount: 80, spread: 60, origin: { y: 0.6 } });
+              }
+
+              const message = res.seeking
+                ? "✅ This person is likely seeking a job."
+                : "❌ This person is likely not seeking a job.";
+
+              resultBox.innerText = message;
+
+              // 💡 Add background glow effect
+              resultBox.className = "prediction-result"; // reset existing classes
+              resultBox.classList.add(res.seeking ? "success" : "fail");
+
+              resultBox.classList.remove("show");
+              void resultBox.offsetWidth;
+              resultBox.classList.add("show");
+            })
+            .catch((err) => {
+              resultBox.innerText = "⚠️ Error: " + err;
+            })
+            .finally(() => {
+              btnText.innerText = "🔍 Predict";
+              spinner.style.display = "none";
+            });
+        });
+    </script>
+
+    <!-- END JS PREDITCITON  -->
+
+    <!-- Experience Chart Script -->
+    <script>
+      d3.csv("data_science_job_cleaned.csv")
+        .then((data) => {
+          data = data.filter(
+            (d) =>
+              d.training_hours_range && d.training_hours_range.trim() !== ""
+          );
+          data.forEach((d) => {
+            d.target = +d.target;
+            d.training_hours_range = d.training_hours_range.trim();
+          });
+
+          const grouped = d3.rollup(
+            data,
+            (v) => v.length,
+            (d) => d.training_hours_range,
+            (d) => (d.target === 1 ? "Seekers" : "Non-Seekers")
+          );
+
+          const allRanges = Array.from(grouped.keys()).sort();
+
+          const seekersData = allRanges.map(
+            (r) => grouped.get(r)?.get("Seekers") || 0
+          );
+          const nonSeekersData = allRanges.map(
+            (r) => grouped.get(r)?.get("Non-Seekers") || 0
+          );
+
+          new Chart(document.getElementById("experienceChart"), {
+            type: "bar",
+            data: {
+              labels: allRanges,
+              datasets: [
+                {
+                  label: "Seekers",
+                  data: seekersData,
+                  backgroundColor: "#FFA500",
+                },
+                {
+                  label: "Non-Seekers",
+                  data: nonSeekersData,
+                  backgroundColor: "#FF4500",
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              plugins: {
+                title: {
+                  display: true,
+                  text: "Job Seeking by Training Hours Range",
+                },
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  title: { display: true, text: "Count" },
+                },
+                x: {
+                  title: { display: true, text: "Training Hours Group" },
+                },
+              },
+            },
+          });
+        })
+        .catch((error) => {
+          console.error("Error loading experience chart data:", error);
+          document.getElementById("experienceChart").outerHTML =
+            "<p style='color:red;'>Error loading experience chart data.</p>";
+        });
+    </script>
+
+    <!-- External Scripts -->
+    <script src="company_type_seeking.js"></script>
+    <script src="avg_job_seeking.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="correlation_heatmap.js"></script>
+  </body>
 </html>
