@@ -1,282 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Salary Page – Data Girls</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Salary Page – Data Girls</title>
 
-  <!-- D3 + PapaParse -->
-  <script src="https://d3js.org/d3.v7.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <!-- D3 + PapaParse -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
-  <!-- Chart.js and your histogram logic -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="hist_salary.js"></script>
-  <script src="line_chart.js"></script>
-  <script src="experience_chart.js"></script>
+    <!-- Chart.js and your histogram logic -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="hist_salary.js"></script>
+    <script src="line_chart.js"></script>
+    <script src="experience_chart.js"></script>
 
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fff;
+        color: #333;
+        text-align: center;
+      }
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fff;
-      color: #333;
-      text-align: center;
-    }
+      .navbar {
+        background-color: rgba(255, 182, 193, 0.9);
+        padding: 1rem 0;
+        display: flex;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
 
-    .navbar {
-      background-color: rgba(255, 182, 193, 0.9);
-      padding: 1rem 0;
-      display: flex;
-      justify-content: center;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
+      .navbar a {
+        text-decoration: none;
+        color: #fff;
+        background-color: #f7a8b8;
+        padding: 0.8rem 1.5rem;
+        margin: 0 1rem;
+        border-radius: 20px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        transition: background 0.3s ease;
+      }
 
-    .navbar a {
-      text-decoration: none;
-      color: #fff;
-      background-color: #f7a8b8;
-      padding: 0.8rem 1.5rem;
-      margin: 0 1rem;
-      border-radius: 20px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
+      .navbar a:hover {
+        background-color: #ffccd5;
+      }
 
-    .navbar a:hover {
-      background-color: #ffccd5;
-    }
+      #bubbleChart {
+        margin: 2rem auto;
+        width: 100%;
+        max-width: 1900px;
+        height: auto;
+        position: relative;
+        overflow-x: auto;
+        text-align: center;
+      }
 
-    #bubbleChart {
-      margin: 2rem auto;
-      width: 100%;
-      max-width: 1900px;
-      height: auto;
-      position: relative;
-      overflow-x: auto;
-      text-align: center;
-    }
+      #bubbleChart svg {
+        display: inline-block;
+      }
 
-    #bubbleChart svg {
-      display: inline-block;
-    }
+      .chart-decoration svg {
+        width: 100%;
+        height: auto;
+      }
 
-    #tooltip {
-      position: absolute;
-      background-color: rgba(0, 0, 0, 0.8);
-      color: white;
-      padding: 6px 10px;
-      border-radius: 5px;
-      pointer-events: none;
-      font-size: 0.9rem;
-      display: none;
-    }
+      #tooltip {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 6px 10px;
+        border-radius: 5px;
+        pointer-events: none;
+        font-size: 0.9rem;
+        display: none;
+      }
 
-    #histogramContainer {
-      margin: 2rem auto;
-      width: 90%;
-      display: none;
-    }
+      #histogramContainer {
+        margin: 2rem auto;
+        width: 90%;
+        display: none;
+      }
 
-    #details {
-      display: none;
-    }
-  </style>
-</head>
-<body>
+      #details {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="index.html">Home</a>
+      <a href="jobseeking.html">Job Seeking</a>
+      <a href="salary.html">Salary</a>
+    </div>
 
-  <div class="navbar">
-    <a href="index.html">Home</a>
-    <a href="jobseeking.html">Job Seeking</a>
-    <a href="salary.html">Salary</a>
-  </div>
+    <h2>Explore Salary Insights</h2>
+    <p
+      style="
+        font-size: 1.1rem;
+        color: #555;
+        max-width: 700px;
+        margin: 0 auto 1rem;
+      "
+    >
+      🌸 Click a bubble and slide down to explore
+      <strong>salary trends</strong>! 🌸
+    </p>
 
-  <h2></h2>
-  <p></p>
-  <div id="bubbleChart">
-    <div id="tooltip"></div>
-  </div>
+    <div id="bubbleChart">
+      <div id="tooltip"></div>
+    </div>
 
-  <!-- Histogram Container -->
-  <div id="histogramContainer">
-    <h3 id="histTitle">Salary Distribution</h3>
-    <label for="countrySelect">Country:</label>
-    <select id="countrySelect" onchange="updateHistogramFilter()">
-      <option value="All">All</option>
-      <option value="United Kingdom">United Kingdom</option>
-      <option value="United States">United States</option>
-    </select>
-    <canvas id="salaryHistogram" width="800" height="400"></canvas>
-  </div>
+    <!-- Histogram Container -->
+    <div id="histogramContainer">
+      <h3 id="histTitle">Salary Distribution</h3>
+      <label for="countrySelect">Country:</label>
+      <select id="countrySelect" onchange="updateHistogramFilter()">
+        <option value="All">All</option>
+        <option value="United Kingdom">United Kingdom</option>
+        <option value="United States">United States</option>
+      </select>
+      <canvas id="salaryHistogram" width="800" height="400"></canvas>
+    </div>
 
-  <!-- Line Chart Container -->
-  <!-- Line Chart Container -->
-  <div id="lineChartContainer" style="display: none; margin: 2rem auto; width: 90%;">
-    <h3 id="lineTitle">Average Salary Over Years</h3>
-    <label for="lineCountrySelect">Country:</label>
-    <select id="lineCountrySelect" onchange="updateLineChartFilter()">
-      <option value="All">All</option>
-      <option value="United Kingdom">United Kingdom</option>
-      <option value="United States">United States</option>
-    </select>
-    <canvas id="lineChartCanvas" width="800" height="400"></canvas>
-  </div>
+    <!-- Line Chart Container -->
+    <!-- Line Chart Container -->
+    <div
+      id="lineChartContainer"
+      style="display: none; margin: 2rem auto; width: 90%"
+    >
+      <h3 id="lineTitle">Average Salary Over Years</h3>
+      <label for="lineCountrySelect">Country:</label>
+      <select id="lineCountrySelect" onchange="updateLineChartFilter()">
+        <option value="All">All</option>
+        <option value="United Kingdom">United Kingdom</option>
+        <option value="United States">United States</option>
+      </select>
+      <canvas id="lineChartCanvas" width="800" height="400"></canvas>
+    </div>
 
-  <!-- Experience Level Chart Container -->
-  <div id="experienceChartContainer" style="display: none; margin: 2rem auto; width: 90%;">
-    <h3 id="experienceTitle">Average Salary by Experience Level</h3>
-    <label for="expCountrySelect">Country:</label>
-    <select id="expCountrySelect" onchange="updateExperienceChartFilter()">
-      <option value="All">All</option>
-      <option value="United Kingdom">United Kingdom</option>
-      <option value="United States">United States</option>
-    </select>
-    <canvas id="experienceChartCanvas" width="800" height="400"></canvas>
-    <p style="font-size: 0.85rem; color: gray;">* "All" includes countries not listed individually</p>
-  </div>
+    <!-- Experience Level Chart Container -->
+    <div
+      id="experienceChartContainer"
+      style="display: none; margin: 2rem auto; width: 90%"
+    >
+      <h3 id="experienceTitle">Average Salary by Experience Level</h3>
+      <label for="expCountrySelect">Country:</label>
+      <select id="expCountrySelect" onchange="updateExperienceChartFilter()">
+        <option value="All">All</option>
+        <option value="United Kingdom">United Kingdom</option>
+        <option value="United States">United States</option>
+      </select>
+      <canvas id="experienceChartCanvas" width="800" height="400"></canvas>
+      <p style="font-size: 0.85rem; color: gray">
+        * "All" includes countries not listed individually
+      </p>
+    </div>
 
+    <!-- Example static section -->
+    <div id="details">
+      <h3>Salary Distribution (Histogram) - Data_Science_job_1</h3>
+      <img src="images/histogram.png" alt="Histogram" />
+      <h3>Evolution of Average Salary (2020–2023) - Data_Science_job_1</h3>
+      <img src="images/line_chart.png" alt="Line Chart" />
+      <h3>Salary vs Experience Level - Data_Science_job_1</h3>
+      <img src="images/exp_level.png" alt="Experience Level" />
+    </div>
 
-  
+    <!-- Main Script for CSV + D3 Bubble Chart -->
+    <script>
+      fetch("Cleaned_Dataset.csv")
+        .then((response) => response.text())
+        .then((csvText) => {
+          Papa.parse(csvText, {
+            header: true,
+            dynamicTyping: true,
+            complete: function (results) {
+              const data = results.data;
+              globalData = data; // use the global variable from hist_salary.js
 
+              const titleMap = {
+                "Data Science and Research": "Data Science",
+                "Data Engineering": "Data Engineering",
+                "Machine Learning and AI": "Machine Learning-AI",
+                "Data Analysis": "Data Analysis",
+                "Leadership and Management": "Leadership-Management",
+                "BI and Visualization": "BI and Visualization",
+              };
 
-  <!-- Example static section -->
-  <div id="details">
-    <h3>Salary Distribution (Histogram) - Data_Science_job_1</h3>
-    <img src="images/histogram.png" alt="Histogram">
-    <h3>Evolution of Average Salary (2020–2023) - Data_Science_job_1</h3>
-    <img src="images/line_chart.png" alt="Line Chart">
-    <h3>Salary vs Experience Level - Data_Science_job_1</h3>
-    <img src="images/exp_level.png" alt="Experience Level">
-  </div>
+              const counts = {};
+              Object.keys(titleMap).forEach(
+                (raw) => (counts[titleMap[raw]] = 0)
+              );
 
-  <!-- Main Script for CSV + D3 Bubble Chart -->
-  <script>
-    fetch('Cleaned_Dataset.csv')
-      .then(response => response.text())
-      .then(csvText => {
-        Papa.parse(csvText, {
-          header: true,
-          dynamicTyping: true,
-          complete: function(results) {
-            const data = results.data;
-            globalData = data; // use the global variable from hist_salary.js
-
-            const titleMap = {
-              'Data Science and Research': 'Data Science',
-              'Data Engineering': 'Data Engineering',
-              'Machine Learning and AI': 'Machine Learning-AI',
-              'Data Analysis': 'Data Analysis',
-              'Leadership and Management': 'Leadership-Management',
-              'BI and Visualization': 'BI and Visualization'
-            };
-
-            const counts = {};
-            Object.keys(titleMap).forEach(raw => counts[titleMap[raw]] = 0);
-
-            data.forEach(row => {
-              const short = titleMap[row.job_category];
-              if (short) counts[short]++;
-            });
-
-            const dataset = {
-              children: Object.entries(counts).map(([name, count]) => ({
-                name: name,
-                rawCount: count, // accurate job count
-                value: (count + name.length * 2) * 2 // for bubble size only
-              }))
-            };
-
-
-            const width = 1800;
-            const height = 800;
-            const svg = d3.select("#bubbleChart")
-              .append("svg")
-              .attr("width", width)
-              .attr("height", height)
-              .attr("viewBox", [0, 0, width, height])
-              .attr("text-anchor", "middle")
-              .style("font-family", "sans-serif");
-
-            const tooltip = d3.select("#tooltip");
-
-            const pack = data => d3.pack()
-              .size([width, height])
-              .padding(10)(d3.hierarchy(data).sum(d => d.value));
-
-            const root = pack(dataset);
-
-            const node = svg.selectAll("g")
-              .data(root.leaves())
-              .join("g")
-              .attr("transform", d => `translate(${d.x},${d.y})`)
-              .style("cursor", "pointer")
-              .on("click", (event, d) => {
-                const rawCategory = Object.keys(titleMap).find(key => titleMap[key] === d.data.name);
-                showHistogramForCategory(rawCategory);
-                showLineChartForCategory(rawCategory);
-                showExperienceChartForCategory(rawCategory);
-              })
-              .on("mouseover", function (event, d) {
-                d3.select(this).select("circle")
-                  .transition().duration(200)
-                  .attr("fill", "rgba(255,182,193,0.7)");
-                tooltip.style("display", "block")
-                .html(`<strong>${d.data.name}</strong><br>${d.data.rawCount} jobs`);
-
-              })
-              .on("mousemove", function (event) {
-                tooltip.style("left", (event.offsetX + 15) + "px")
-                       .style("top", (event.offsetY - 10) + "px");
-              })
-              .on("mouseout", function () {
-                d3.select(this).select("circle")
-                  .transition().duration(200)
-                  .attr("fill", "rgba(255,182,193,0.5)");
-                tooltip.style("display", "none");
+              data.forEach((row) => {
+                const short = titleMap[row.job_category];
+                if (short) counts[short]++;
               });
 
-            node.append("circle")
-              .attr("r", d => d.r)
-              .attr("fill", "rgba(255,182,193,0.5)")
-              .attr("stroke", "rgba(255,182,193,0.5)")
-              .attr("stroke-width", 1.5);
+              const dataset = {
+                children: Object.entries(counts).map(([name, count]) => ({
+                  name: name,
+                  value: (count + name.length * 2) * 2,
+                })),
+              };
 
-            node.append("text")
-              .text(d => d.data.name)
-              .attr("dy", "0.3em")
-              .style("fill", "#555555")
-              .style("font-weight", "bold")
-              .each(function(d) {
-                const self = d3.select(this);
-                let fontSize = d.r / 4;
-                self.style("font-size", fontSize + "px");
-                while (this.getComputedTextLength() > d.r * 1.7 && fontSize > 6) {
-                  fontSize -= 1;
-                  self.style("font-size", fontSize + "px");
-                }
-              });
+              const width = 1800;
+              const height = 800;
+              const svg = d3
+                .select("#bubbleChart")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .attr("viewBox", [0, 0, width, height])
+                .attr("text-anchor", "middle")
+                .style("font-family", "sans-serif");
 
-            function swim() {
-              node.transition()
-                .duration(3000)
-                .ease(d3.easeSinInOut)
-                .attr("transform", d => {
-                  const dx = d.x + (Math.random() - 0.5) * 10;
-                  const dy = d.y + (Math.random() - 0.5) * 10;
-                  return `translate(${dx},${dy})`;
+              const tooltip = d3.select("#tooltip");
+
+              const pack = (data) =>
+                d3.pack().size([width, height]).padding(10)(
+                  d3.hierarchy(data).sum((d) => d.value)
+                );
+
+              const root = pack(dataset);
+
+              const node = svg
+                .selectAll("g")
+                .data(root.leaves())
+                .join("g")
+                .attr("transform", (d) => `translate(${d.x},${d.y})`)
+                .style("cursor", "pointer")
+                .on("click", (event, d) => {
+                  const rawCategory = Object.keys(titleMap).find(
+                    (key) => titleMap[key] === d.data.name
+                  );
+                  showHistogramForCategory(rawCategory);
+                  showLineChartForCategory(rawCategory);
+                  showExperienceChartForCategory(rawCategory);
                 })
-                .on("end", swim);
-            }
+                .on("mouseover", function (event, d) {
+                  d3.select(this)
+                    .select("circle")
+                    .transition()
+                    .duration(200)
+                    .attr("fill", "rgba(255,182,193,0.7)");
+                  tooltip
+                    .style("display", "block")
+                    .html(
+                      `<strong>${d.data.name}</strong><br>${Math.round(
+                        d.value
+                      )} jobs`
+                    );
+                })
+                .on("mousemove", function (event) {
+                  tooltip
+                    .style("left", event.offsetX + 15 + "px")
+                    .style("top", event.offsetY - 10 + "px");
+                })
+                .on("mouseout", function () {
+                  d3.select(this)
+                    .select("circle")
+                    .transition()
+                    .duration(200)
+                    .attr("fill", "rgba(255,182,193,0.5)");
+                  tooltip.style("display", "none");
+                });
 
-            swim();
-          }
+              node
+                .append("circle")
+                .attr("r", (d) => d.r)
+                .attr("fill", "rgba(255,182,193,0.5)")
+                .attr("stroke", "rgba(255,182,193,0.5)")
+                .attr("stroke-width", 1.5);
+
+              node
+                .append("text")
+                .text((d) => d.data.name)
+                .attr("dy", "0.3em")
+                .style("fill", "#555555")
+                .style("font-weight", "bold")
+                .each(function (d) {
+                  const self = d3.select(this);
+                  let fontSize = d.r / 4;
+                  self.style("font-size", fontSize + "px");
+                  while (
+                    this.getComputedTextLength() > d.r * 1.7 &&
+                    fontSize > 6
+                  ) {
+                    fontSize -= 1;
+                    self.style("font-size", fontSize + "px");
+                  }
+                });
+
+              function swim() {
+                node
+                  .transition()
+                  .duration(3000)
+                  .ease(d3.easeSinInOut)
+                  .attr("transform", (d) => {
+                    const dx = d.x + (Math.random() - 0.5) * 10;
+                    const dy = d.y + (Math.random() - 0.5) * 10;
+                    return `translate(${dx},${dy})`;
+                  })
+                  .on("end", swim);
+              }
+
+              swim();
+            },
+          });
         });
-      });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
