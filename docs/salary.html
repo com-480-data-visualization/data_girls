@@ -52,19 +52,25 @@
       }
 
       #bubbleChart {
-        margin: 2rem auto;
-        width: 100%;
-        max-width: 1900px;
-        height: auto;
-        position: relative;
-        overflow-x: auto;
-        text-align: center;
-      }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem auto;
+  width: 100%;
+  max-width: 1250px;
+  height: 800px;
+  overflow: hidden;
+  text-align: center;
+}
 
-      #bubbleChart svg {
-        display: inline-block;
-      }
+#bubbleChart svg {
+  width: 100%;
+  height: 100%;
+}
 
+
+
+      
       .chart-decoration svg {
         width: 100%;
         height: auto;
@@ -218,8 +224,8 @@ label {
             dynamicTyping: true,
             complete: function (results) {
               const data = results.data;
-              globalData = data; // use the global variable from hist_salary.js
-
+              globalData = data;
+    
               const titleMap = {
                 "Data Science and Research": "Data Science",
                 "Data Engineering": "Data Engineering",
@@ -228,26 +234,26 @@ label {
                 "Leadership and Management": "Leadership-Management",
                 "BI and Visualization": "BI and Visualization",
               };
-
+    
               const counts = {};
               Object.keys(titleMap).forEach(
                 (raw) => (counts[titleMap[raw]] = 0)
               );
-
+    
               data.forEach((row) => {
                 const short = titleMap[row.job_category];
                 if (short) counts[short]++;
               });
-
+    
               const dataset = {
                 children: Object.entries(counts).map(([name, count]) => ({
                   name: name,
-                  value: (count + name.length * 2) * 2,
+                  value: (count + name.length * 2) * 15, // BIGGER bubbles
                 })),
               };
-
-              const width = 1800;
-              const height = 800;
+    
+              const width = 1400;
+              const height = 900;
               const svg = d3
                 .select("#bubbleChart")
                 .append("svg")
@@ -255,17 +261,20 @@ label {
                 .attr("height", height)
                 .attr("viewBox", [0, 0, width, height])
                 .attr("text-anchor", "middle")
-                .style("font-family", "sans-serif");
-
+                .style("font-family", "sans-serif")
+                .style("display", "block")
+                .style("margin", "0 auto");
+    
               const tooltip = d3.select("#tooltip");
-
+    
               const pack = (data) =>
-                d3.pack().size([width, height]).padding(10)(
-                  d3.hierarchy(data).sum((d) => d.value)
-                );
-
+                d3.pack()
+                  .size([width, height])
+                  .padding(30) // more spacing between bubbles
+                  (d3.hierarchy(data).sum((d) => d.value));
+    
               const root = pack(dataset);
-
+    
               const node = svg
                 .selectAll("g")
                 .data(root.leaves())
@@ -307,14 +316,14 @@ label {
                     .attr("fill", "rgba(255,182,193,0.5)");
                   tooltip.style("display", "none");
                 });
-
+    
               node
                 .append("circle")
                 .attr("r", (d) => d.r)
                 .attr("fill", "rgba(255,182,193,0.5)")
-                .attr("stroke", "rgba(255,182,193,0.5)")
+                .attr("stroke", "rgba(255,182,193,0.9)")
                 .attr("stroke-width", 1.5);
-
+    
               node
                 .append("text")
                 .text((d) => d.data.name)
@@ -333,24 +342,25 @@ label {
                     self.style("font-size", fontSize + "px");
                   }
                 });
-
-              function swim() {
+    
+              function floatBubbles() {
                 node
                   .transition()
-                  .duration(3000)
+                  .duration(4000)
                   .ease(d3.easeSinInOut)
                   .attr("transform", (d) => {
                     const dx = d.x + (Math.random() - 0.5) * 10;
                     const dy = d.y + (Math.random() - 0.5) * 10;
                     return `translate(${dx},${dy})`;
                   })
-                  .on("end", swim);
+                  .on("end", floatBubbles);
               }
-
-              swim();
+    
+              floatBubbles();
             },
           });
         });
     </script>
+    
   </body>
 </html>
