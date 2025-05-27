@@ -8,19 +8,12 @@ function showHistogramForCategory(categoryName) {
   document.getElementById("histTitle").textContent = "Salary Distribution – " + categoryName;
 
   const filtered = globalData.filter(row => row.job_category === currentCategory);
-
-  // Count samples per company_location
   const countryCounts = {};
   filtered.forEach(d => {
     const loc = d.company_location;
-    if (loc in countryCounts) {
-      countryCounts[loc]++;
-    } else {
-      countryCounts[loc] = 1;
-    }
+    countryCounts[loc] = (countryCounts[loc] || 0) + 1;
   });
 
-  // Keep only countries with ≥ 50 samples
   const allowedCountries = Object.entries(countryCounts)
     .filter(([_, count]) => count >= 50)
     .map(([country]) => country)
@@ -35,23 +28,16 @@ function showHistogramForCategory(categoryName) {
     countrySelect.appendChild(opt);
   });
 
-  updateHistogramFilter();  // update with initial "All" filter
+  updateHistogramFilter();
 }
 
 function updateHistogramFilter() {
   const country = document.getElementById("countrySelect").value;
-
-  let filtered = globalData.filter(row =>
-    row.job_category === currentCategory
-  );
-
-  if (country !== "All") {
-    filtered = filtered.filter(row => row.company_location === country);
-  }
+  let filtered = globalData.filter(row => row.job_category === currentCategory);
+  if (country !== "All") filtered = filtered.filter(row => row.company_location === country);
 
   const salaries = filtered.map(d => d.salary_in_usd)
     .filter(s => typeof s === "number" && !isNaN(s));
-
   if (!salaries.length) return;
 
   const min = Math.min(...salaries);
@@ -84,24 +70,40 @@ function updateHistogramFilter() {
         label: "Frequency",
         data: bins,
         backgroundColor: "rgba(255, 182, 193, 0.5)",
-        borderColor: "rgba(255, 182, 193, 1)",
-        borderWidth: 1
+        borderColor: "rgba(255, 105, 180, 0.9)",
+        borderWidth: 2,
+        borderRadius: 10,
+        barPercentage: 0.8,
+        categoryPercentage: 0.8
       }]
     },
     options: {
       responsive: true,
       plugins: {
-        legend: { display: false }
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: "rgba(255,182,193,0.9)",
+          titleFont: { size: 14, weight: "bold" },
+          bodyFont: { size: 13 },
+          borderWidth: 1,
+          borderColor: "rgba(255,105,180,0.8)"
+        }
       },
       scales: {
         x: {
-          title: { display: true, text: "Salary in USD" }
+          title: { display: true, text: "Salary in USD", font: { size: 14, weight: "bold" }, color: '#333' },
+          ticks: { font: { size: 12 }, color: '#333' },
+          grid: { color: "rgba(255,182,193,0.1)" }
         },
         y: {
           beginAtZero: true,
-          title: { display: true, text: "Frequency" }
+          title: { display: true, text: "Frequency", font: { size: 14, weight: "bold" }, color: '#333' },
+          ticks: { font: { size: 12 }, color: '#333' },
+          grid: { color: "rgba(255,182,193,0.1)" }
         }
-      }
+      },
+      layout: { padding: { top: 20, bottom: 20 } },
+      animation: { duration: 800, easing: "easeOutQuart" }
     }
   });
 }
