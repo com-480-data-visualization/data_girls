@@ -145,8 +145,8 @@ website :  https://com-480-data-visualization.github.io/data_girls/
 
 
 ## Milestone 3 (30th May, 5pm)
+Screencast: https://youtu.be/HgtM8cTcJ08
 
-**80% of the final grade**
 
 
 ## Late policy
