@@ -246,11 +246,12 @@ label {
               });
     
               const dataset = {
-                children: Object.entries(counts).map(([name, count]) => ({
-                  name: name,
-                  value: (count + name.length * 2) * 15, // BIGGER bubbles
-                })),
-              };
+              children: Object.entries(counts).map(([name, count]) => ({
+                name: name,
+                rawCount: count, // ✅ store actual job count
+                value: (count + name.length * 2) * 15 // for bubble size only
+              })),
+            };
     
               const width = 1400;
               const height = 900;
@@ -298,9 +299,7 @@ label {
                   tooltip
                     .style("display", "block")
                     .html(
-                      `<strong>${d.data.name}</strong><br>${Math.round(
-                        d.value
-                      )} jobs`
+                      `<strong>${d.data.name}</strong><br>${d.data.rawCount} jobs`
                     );
                 })
                 .on("mousemove", function (event) {

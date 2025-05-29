@@ -51,12 +51,6 @@ d3.csv("data_science_job_cleaned.csv").then(data => {
           bodyFont: { size: 13 },
           borderWidth: 1,
           borderColor: "rgba(255,105,180,0.8)"
-        },
-        title: {
-          display: true,
-          text: 'Average Job Seeking Probability by Training Hours Group',
-          font: { size: 18, weight: "bold" },
-          color: '#333'
         }
       },
       scales: {
