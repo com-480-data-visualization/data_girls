@@ -115,7 +115,12 @@ function updateExperienceChartFilter() {
               return `Samples: ${countByLevel[level]}`;
             }
           }
-        
+        },
+        title: {
+          display: true,
+          font: { size: 18, weight: "bold" },
+          color: '#333'
+        }
       },
       scales: {
         x: {
