@@ -42,14 +42,14 @@ function labelEncode(array) {
         const cov = d3.sum(x.map((_, k) => (x[k] - meanX) * (y[k] - meanY))) / n;
         const stdX = Math.sqrt(d3.mean(x.map(d => (d - meanX) ** 2)));
         const stdY = Math.sqrt(d3.mean(y.map(d => (d - meanY) ** 2)));
-        return +(cov / (stdX * stdY)).toFixed(4); // More decimals for contrast
+        return +(cov / (stdX * stdY)).toFixed(4); 
       });
     });
   
     const customColorscale = [
-        [0, '#ffccd5'],     // Deep light pink (negative correlations)
-        [0.5, '#ffe6ea'],   // Light pink near zero
-        [1, '#ff4500']      // Orange-red (positive correlations)
+        [0, '#ffccd5'],    
+        [0.5, '#ffe6ea'],  
+        [1, '#ff4500']      
       ];
       
       const heatmapData = [{

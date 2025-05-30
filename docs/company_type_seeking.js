@@ -10,7 +10,7 @@ d3.csv("data_science_job_cleaned.csv").then(data => {
       d.company_type = d.company_type.trim();
     });
   
-    // Group by company_type and compute % seekers
+    // Group by company_type 
     const grouped = d3.rollup(
       data,
       v => {
@@ -30,14 +30,14 @@ d3.csv("data_science_job_cleaned.csv").then(data => {
         datasets: [{
           data: values,
           backgroundColor: [
-            '#ffccd5', // light pink
-            '#ffa6b8', // soft pink
-            '#ff4500', // coral
-            '#ff9966', // orange
-            '#ffb380', // soft orange
-            '#ff6347', // orange-red
-            '#ff4500', // tomato
-            '#cc3333'  // dark red
+            '#ffccd5', 
+            '#ffa6b8', 
+            '#ff4500', 
+            '#ff9966', 
+            '#ffb380', 
+            '#ff6347', 
+            '#ff4500', 
+            '#cc3333'  
           ],
           borderColor: '#fff',
           borderWidth: 2,

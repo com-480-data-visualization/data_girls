@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Salary Page – Data Girls</title>
 
-    <!-- D3 + PapaParse -->
+    
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
-    <!-- Chart.js and your histogram logic -->
+    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="hist_salary.js"></script>
     <script src="line_chart.js"></script>
@@ -158,7 +158,7 @@ label {
       <div id="tooltip"></div>
     </div>
 
-    <!-- Histogram Container -->
+    
     <div id="histogramContainer">
       <h3 id="histTitle">Salary Distribution</h3>
       <label for="countrySelect">Country:</label>
@@ -170,8 +170,7 @@ label {
       <canvas id="salaryHistogram" width="800" height="400"></canvas>
     </div>
 
-    <!-- Line Chart Container -->
-    <!-- Line Chart Container -->
+
     <div
       id="lineChartContainer"
       style="display: none; margin: 2rem auto; width: 90%"
@@ -186,7 +185,7 @@ label {
       <canvas id="lineChartCanvas" width="800" height="400"></canvas>
     </div>
 
-    <!-- Experience Level Chart Container -->
+    
     <div
       id="experienceChartContainer"
       style="display: none; margin: 2rem auto; width: 90%"
@@ -204,7 +203,7 @@ label {
       </p>
     </div>
 
-    <!-- Example static section -->
+    
     <div id="details">
       <h3>Salary Distribution (Histogram) - Data_Science_job_1</h3>
       <img src="images/histogram.png" alt="Histogram" />
@@ -214,7 +213,7 @@ label {
       <img src="images/exp_level.png" alt="Experience Level" />
     </div>
 
-    <!-- Main Script for CSV + D3 Bubble Chart -->
+    
     <script>
       fetch("Cleaned_Dataset.csv")
         .then((response) => response.text())
@@ -248,8 +247,8 @@ label {
               const dataset = {
               children: Object.entries(counts).map(([name, count]) => ({
                 name: name,
-                rawCount: count, // ✅ store actual job count
-                value: (count + name.length * 2) * 15 // for bubble size only
+                rawCount: count, 
+                value: (count + name.length * 2) * 15 
               })),
             };
     
@@ -271,7 +270,7 @@ label {
               const pack = (data) =>
                 d3.pack()
                   .size([width, height])
-                  .padding(30) // more spacing between bubbles
+                  .padding(30) 
                   (d3.hierarchy(data).sum((d) => d.value));
     
               const root = pack(dataset);

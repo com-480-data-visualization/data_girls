@@ -52,7 +52,7 @@ function updateLineChartFilter() {
   });
 }
 
-// Call from histogram interaction
+
 function showLineChartForCategory(categoryName) {
     const container = document.getElementById("lineChartContainer");
     container.style.display = "block";
@@ -63,7 +63,7 @@ function showLineChartForCategory(categoryName) {
       [2020, 2021, 2022, 2023].includes(d.work_year)
     );
   
-    // Count entries by (country, year)
+    
     const countryYearCounts = {};
   
     filtered.forEach(d => {
@@ -74,16 +74,16 @@ function showLineChartForCategory(categoryName) {
       countryYearCounts[country][year]++;
     });
   
-    // Keep only countries with at least 10 entries for each of the years
+    
     const validCountries = Object.entries(countryYearCounts)
       .filter(([country, yearMap]) => {
         return [2020, 2021, 2022, 2023].every(year => (yearMap[year] || 0) >= 10);
       })
       .map(([country]) => country)
-      .filter(c => c === "United States" || c === "United Kingdom")  // Keep only these two
+      .filter(c => c === "United States" || c === "United Kingdom")  
       .sort();
   
-    // Populate dropdown
+    
     const dropdown = document.getElementById("lineCountrySelect");
     dropdown.innerHTML = '<option value="All">All</option>';
     validCountries.forEach(c => {

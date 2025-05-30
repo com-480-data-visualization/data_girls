@@ -6,14 +6,14 @@ d3.csv("data_science_job_cleaned.csv").then(data => {
         return;
     }
 
-    // Clean and preprocess the data
+    // preprocess the data
     data = data.filter(d => d.training_hours_range && d.training_hours_range.trim() !== "");
     data.forEach(d => {
         d.target = +d.target;
         d.training_hours_range = d.training_hours_range.trim();
     });
 
-    // Group the data
+    
     const groupedData = d3.rollup(
         data,
         v => v.length,
@@ -21,7 +21,7 @@ d3.csv("data_science_job_cleaned.csv").then(data => {
         d => d.target === 1 ? "Seekers" : "Non-Seekers"
     );
 
-    // Format data for visualization
+    
     const formattedData = Array.from(groupedData, ([range, values]) => ({
         range: range,
         seekers: values.get("Seekers") || 0,

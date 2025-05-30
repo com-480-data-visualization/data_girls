@@ -287,17 +287,7 @@
     <div class="chart-container center-chart">
       <div id="correlationHeatmap"></div>
     </div>
-    <!-- 
-    <h3>Predict if Looking for a Job</h3>
-    <div class="chart-container">
-      <img
-        src="images/predict_section.jpg"
-        alt="Job Seeking Prediction"
-        class="heatmap"
-      />
-    </div>
- -->
-    <!-- TRY PREDICTION -->
+    
 
     <div class="predictor-box">
       <h3>🎀 Try the Job Predictor 🎀</h3>
@@ -336,8 +326,6 @@
       <div id="result" class="prediction-result"></div>
     </div>
 
-    <!-- END PREDITCITON  -->
-    <!-- JS PREDITCITON  -->
     <script>
       document
         .getElementById("predictForm")
@@ -379,8 +367,8 @@
 
               resultBox.innerText = message;
 
-              // 💡 Add background glow effect
-              resultBox.className = "prediction-result"; // reset existing classes
+            
+              resultBox.className = "prediction-result";
               resultBox.classList.add(res.seeking ? "success" : "fail");
 
               resultBox.classList.remove("show");
@@ -397,9 +385,7 @@
         });
     </script>
 
-    <!-- END JS PREDITCITON  -->
-
-    <!-- Experience Chart Script -->
+    
     <script>
       d3.csv("data_science_job_cleaned.csv")
         .then((data) => {
@@ -466,7 +452,7 @@
         });
     </script>
 
-    <!-- External Scripts -->
+
     <script src="company_type_seeking.js"></script>
     <script src="avg_job_seeking.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
