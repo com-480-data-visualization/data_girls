@@ -81,6 +81,19 @@
       border-radius: 0;
       box-shadow: none;
     }
+
+    footer {
+      background-color: #f7a8b8;
+      color: white;
+      padding: 1rem 0;
+      text-align: center;
+      font-size: 1rem;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -94,12 +107,34 @@
     <h1>Welcome to Data Girls Homepage</h1>
     <div class="description-box">
       This project explores the factors that influence job transitions and salary trends in the data science field. Through interactive visualizations, we analyze how education, experience, company characteristics, and demographics impact both career mobility and compensation.
-      Using data from 2020 to 2023, we highlight patterns across roles such as Data Scientist, Machine Learning Engineer... revealing how these evolve over time, differ by country and vary with experience level.
+      <br><br>
+      Using data from 2020 to 2023, we highlight patterns across roles such as Data Scientist, Machine Learning Engineer... revealing how these evolve over time, differ by country, and vary with experience level.
     </div>
   </div>
 
   <div class="image-container">
     <img src="data_image_2.webp" alt="Data Science Visual Jobs">
   </div>
+
+  <!-- ✅ Contact bar at the bottom -->
+  <footer style="
+  background-color: rgba(255, 182, 193, 0.9);
+  color: white;
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 1rem;
+">
+  <p><strong>Contact Us</strong></p>
+  <div style="
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  ">
+    <div>Imane Zaaraoui – <a href="mailto:imane.zaaraoui@epfl.ch" style="color: white; text-decoration: underline;">imane.zaaraoui@epfl.ch</a></div>
+    <div>Tamara Antoun – <a href="mailto:tamara.antoun@epfl.ch" style="color: white; text-decoration: underline;">tamara.antoun@epfl.ch</a></div>
+    <div>Zaineb Tafasca – <a href="mailto:zaineb.tafasca@epfl.ch" style="color: white; text-decoration: underline;">zaineb.tafasca@epfl.ch</a></div>
+  </div>
+</footer>
 </body>
 </html>
