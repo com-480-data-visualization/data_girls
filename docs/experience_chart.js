@@ -115,13 +115,7 @@ function updateExperienceChartFilter() {
               return `Samples: ${countByLevel[level]}`;
             }
           }
-        },
-        title: {
-          display: true,
-          text: "Average Salary by Experience Level",
-          font: { size: 18, weight: "bold" },
-          color: '#333'
-        }
+        
       },
       scales: {
         x: {
